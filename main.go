@@ -9,18 +9,17 @@ import (
 )
 
 func main() {
-	// Load environment variables from .env file
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Initialize the blockchain
-	genesisBlock := blockchain.NewBlock(0, "Genesis Block")
-	blockchain.Blockchain = append(blockchain.Blockchain, genesisBlock)
+	genesisBlock := blockchain.NewBlock(0, 0, "Genesis Block", 0)
+	initialBlockchain := []*blockchain.Block{genesisBlock}
+	blockchainInstance := blockchain.NewBlockchain()
+	blockchainInstance.SetBlockchain(initialBlockchain)
 
-	// Start the HTTP server
-	if err := web.RunServer(); err != nil {
+	if err := web.StartServer(); err != nil {
 		log.Fatal(err)
 	}
 }
